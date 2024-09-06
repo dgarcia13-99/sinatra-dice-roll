@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Dice Roll</title>
+</head>
+
+<body>
+
+<h1>1d20</h1>
+<% if @dice == 1 %>
+<p style="color:red"><%= @outcome_1_20 %></p>
+
+<%elsif @dice == 20 %>
+<p style="color:green"><%= @outcome_1_20 %></p>
+
+<%else %>
+<p><%= @outcome_1_20 %></p>
+<% end %>
+
+</body>
+
+</html>
