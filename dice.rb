@@ -1,19 +1,28 @@
 require "sinatra"
 require "sinatra/reloader"
+require "better_errors"
+require "binding_of_caller"
+
+# Need this configuration for better_errors
+use(BetterErrors::Middleware)
+BetterErrors.application_root = __dir__
+BetterErrors::Middleware.allow_ip!('0.0.0.0/0.0.0.0')
+
 
 get("/") do
   "<h1>Dice Roll</h1>
   <body>
-  <div>
-  <ul>
-    <li> <a href="https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/2/6"> Roll two six-sided die </a> </li>
-    <li> <a href="https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/2/10"> Roll two ten-sided die </a> </li>
-    <li> <a href="https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/1/20"> Roll one twenty-sided dice </a> </li>
-    <li> <a href="https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/5/4"> Roll five four-sided die </a> </li>
-  </div>
-  </body>
-  "
+    <div>
+      <ul>
+        <li><a href=\"https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/2/6\"> Roll two six-sided dice</a></li>
+        <li><a href=\"https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/2/10\"> Roll two ten-sided dice</a></li>
+        <li><a href=\"https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/1/20\"> Roll one twenty-sided dice</a></li>
+        <li><a href=\"https://sturdy-eureka-q79pxgggxx9rc4vqj-4567.app.github.dev/dice/5/4\"> Roll five four-sided dice</a></li>
+      </ul>
+    </div>
+  </body>"
 end
+
 
 
 get("/zebra") do
@@ -44,7 +53,7 @@ get ("/dice/2/10") do
   second=rand(1..10)
   sum=first+second
 
-  answer="You rolled a #{first} and a #{second}, resulting in a total sum of #{answer}."
+  answer="You rolled a #{first} and a #{second}, resulting in a total sum of #{sum}."
 
   "<h1>2d10</h1>
   <p>#{answer}</p>"
@@ -52,10 +61,10 @@ end
 
 get ("/dice/1/20") do
   dice=rand(1..20)
-  answer="You rolled a #{dice}."
+  final_answer="You rolled a #{dice}."
 
-  "<h1>2d10</h1>
-  <p>#{dice}</p>"
+  "<h1>1d20</h1>
+  <p>#{final_answer}</p>"
 end
 
 get ("/dice/5/4") do
@@ -68,6 +77,6 @@ get ("/dice/5/4") do
 
   outcome="You rolled a #{first}, a #{second}, a #{third}, a #{fourth}, and a #{fifth}, resulting in a total sum of #{sum}."
 
-  "<h1>2d10</h1>
+  "<h1>5d4</h1>
   <p>#{outcome}</p>"
 end
